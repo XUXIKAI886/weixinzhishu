@@ -30,7 +30,7 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: wechat-index-dashboard/package-lock.json
+        cache-dependency-path: wechat-index-dashboard/package.json
     
     - name: Setup Pages
       uses: actions/configure-pages@v5
@@ -41,7 +41,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd wechat-index-dashboard
-        npm ci
+        npm install
     
     - name: Build Next.js app
       run: |
