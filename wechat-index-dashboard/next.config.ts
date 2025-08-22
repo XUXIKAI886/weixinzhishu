@@ -22,6 +22,15 @@ const nextConfig: NextConfig = {
       allowedOrigins: [],
     },
   },
+  
+  // Webpack 配置确保路径别名正常工作
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, 'src'),
+    };
+    return config;
+  },
 };
 
 export default nextConfig;
