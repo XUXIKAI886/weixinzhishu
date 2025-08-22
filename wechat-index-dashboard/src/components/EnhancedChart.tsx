@@ -9,11 +9,11 @@ import {
   Maximize2,
   ZoomIn
 } from 'lucide-react';
-import { PlatformData } from '@/data/dataParser';
+import { PlatformData } from '../data/dataParser';
 
 // 引入重构后的组件和hooks
-import { useChartState } from '@/hooks/useChartState';
-import { useChartData } from '@/hooks/useChartData';
+import { useChartState } from '../hooks/useChartState';
+import { useChartData } from '../hooks/useChartData';
 import { QuickTimeSelector } from './chart/QuickTimeSelector';
 import { PlatformSelector } from './chart/PlatformSelector';
 import { StatisticsCards } from './chart/StatisticsCards';

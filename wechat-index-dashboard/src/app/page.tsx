@@ -1,13 +1,13 @@
 'use client';
 
 // 引入重构后的组件和hooks
-import { useDataLoader } from '@/hooks/useDataLoader';
-import EnhancedChart from '@/components/EnhancedChart';
-import { DataUploader } from '@/components/page/DataUploader';
-import { LoadingState } from '@/components/page/LoadingState';
-import { ErrorState } from '@/components/page/ErrorState';
-import { EmptyState } from '@/components/page/EmptyState';
-import { PageFooter } from '@/components/page/PageFooter';
+import { useDataLoader } from '../hooks/useDataLoader';
+import EnhancedChart from '../components/EnhancedChart';
+import { DataUploader } from '../components/page/DataUploader';
+import { LoadingState } from '../components/page/LoadingState';
+import { ErrorState } from '../components/page/ErrorState';
+import { EmptyState } from '../components/page/EmptyState';
+import { PageFooter } from '../components/page/PageFooter';
 
 /**
  * 首页组件 - 重构版本

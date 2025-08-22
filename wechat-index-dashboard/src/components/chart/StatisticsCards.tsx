@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { BarChart3 } from 'lucide-react';
-import { PlatformData, formatNumber } from '@/data/dataParser';
+import { PlatformData, formatNumber } from '../../data/dataParser';
 
 interface StatisticsCardsProps {
   platforms: PlatformData[];

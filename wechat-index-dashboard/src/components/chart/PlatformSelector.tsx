@@ -2,7 +2,7 @@
 
 import { Button } from '../ui/button';
 import { BarChart3 } from 'lucide-react';
-import { PlatformData } from '@/data/dataParser';
+import { PlatformData } from '../../data/dataParser';
 
 interface PlatformSelectorProps {
   platforms: PlatformData[];

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { PlatformData } from '@/data/dataParser';
+import { PlatformData } from '../data/dataParser';
 
 /**
  * 图表数据点接口

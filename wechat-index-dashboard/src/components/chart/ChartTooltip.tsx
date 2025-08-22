@@ -1,6 +1,6 @@
 'use client';
 
-import { formatNumber } from '@/data/dataParser';
+import { formatNumber } from '../../data/dataParser';
 
 interface TooltipPayload {
   dataKey: string;

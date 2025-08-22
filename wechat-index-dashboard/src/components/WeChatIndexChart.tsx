@@ -2,10 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { TrendingUp, Calendar } from 'lucide-react';
-import { PlatformData } from '@/data/dataParser';
+import { PlatformData } from '../data/dataParser';
 
 // 引入重构后的组件和hooks
-import { useChartData } from '@/hooks/useChartData';
+import { useChartData } from '../hooks/useChartData';
 import { StatisticsCards } from './chart/StatisticsCards';
 import { InteractiveLineChart } from './chart/InteractiveLineChart';
 

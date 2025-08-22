@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ParsedData } from '@/data/dataParser';
-import { DataService } from '@/services/dataService';
+import { ParsedData } from '../data/dataParser';
+import { DataService } from '../services/dataService';
 
 /**
  * 数据加载状态管理Hook

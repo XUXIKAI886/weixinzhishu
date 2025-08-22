@@ -1,6 +1,6 @@
 'use client';
 
-import { parseWeChatIndexData, ParsedData } from '@/data/dataParser';
+import { parseWeChatIndexData, ParsedData } from '../data/dataParser';
 
 /**
  * 数据服务层
@@ -21,22 +21,38 @@ export class DataService {
   }
 
   /**
+   * 加载默认数据文件 (26_Full.txt)
+   */
+  static async loadDefaultData(): Promise<ParsedData> {
+    try {
+      const response = await fetch('/weixinzhishu/data/26_Full.txt');
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      const content = await response.text();
+      return parseWeChatIndexData(content);
+    } catch (error) {
+      throw new Error(`默认数据文件加载失败: ${error instanceof Error ? error.message : '未知错误'}`);
+    }
+  }
+
+  /**
    * 加载示例数据
    */
   static async loadSampleData(): Promise<ParsedData> {
     try {
-      // 首先尝试从API获取数据
-      const response = await fetch('/api/sample-data');
-      if (response.ok) {
-        const content = await response.text();
-        return parseWeChatIndexData(content);
-      }
-      
-      // 如果API不可用，使用内嵌示例数据
-      const { rawDataContent } = await import('@/data/sampleData');
-      return parseWeChatIndexData(rawDataContent);
+      // 首先尝试加载默认数据文件
+      return await DataService.loadDefaultData();
     } catch (error) {
-      throw new Error(`示例数据加载失败: ${error instanceof Error ? error.message : '未知错误'}`);
+      console.warn('默认数据文件加载失败，使用内嵌示例数据:', error);
+      
+      try {
+        // 如果默认数据文件不可用，使用内嵌示例数据
+        const { rawDataContent } = await import('../data/sampleData');
+        return parseWeChatIndexData(rawDataContent);
+      } catch (fallbackError) {
+        throw new Error(`所有数据源加载失败: ${fallbackError instanceof Error ? fallbackError.message : '未知错误'}`);
+      }
     }
   }
 

@@ -13,8 +13,8 @@ import {
   Brush
 } from 'recharts';
 import { ChartTooltip } from './ChartTooltip';
-import { PlatformData, formatNumber } from '@/data/dataParser';
-import { ChartDataPoint } from '@/hooks/useChartData';
+import { PlatformData, formatNumber } from '../../data/dataParser';
+import { ChartDataPoint } from '../../hooks/useChartData';
 
 interface InteractiveLineChartProps {
   data: ChartDataPoint[];
