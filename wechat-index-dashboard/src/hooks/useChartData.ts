@@ -76,13 +76,13 @@ export function useChartData(platforms: PlatformData[], timeRange: string, selec
         .map(platform => item[platform.name] as number || 0)
     );
     
-    if (allValues.length === 0) return [0, 100];
+    if (allValues.length === 0) return [0, 100] as [number, number];
     
     const minValue = Math.min(...allValues);
     const maxValue = Math.max(...allValues);
     const padding = (maxValue - minValue) * 0.1;
     
-    return [minValue - padding, maxValue + padding];
+    return [minValue - padding, maxValue + padding] as [number, number];
   }, [filteredChartData, platforms, selectedPlatforms]);
 
   return {

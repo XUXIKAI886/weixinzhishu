@@ -110,7 +110,7 @@ export function InteractiveLineChart({
             x="2025-02-10" 
             stroke="#ff7300" 
             strokeDasharray="4 4" 
-            label={{ value: "春节", position: "topLeft" }}
+            label={{ value: "春节", position: "top" }}
           />
 
           {/* 缩放画刷 */}
