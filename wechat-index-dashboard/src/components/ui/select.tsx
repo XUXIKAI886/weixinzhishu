@@ -1,7 +1,12 @@
 import * as React from "react"
 import { ChevronDown } from "lucide-react"
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-import { cn } from "@/lib/utils"
+// 内联 cn 函数避免路径问题
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 const Select = React.forwardRef<
   HTMLSelectElement,
