@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外卖平台微信指数趋势对比</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', 'SimHei', Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 500px;
+            margin: 30px 0;
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .stat-card p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            padding: 50px;
+        }
+        
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">外卖平台微信指数趋势对比</h1>
+        <p class="subtitle">数据时间范围：2024年8月 - 2025年8月 (月度平均值)</p>
+        
+        <div class="chart-container">
+            <div class="loading" id="loading">正在加载图表...</div>
+            <canvas id="lineChart" style="display: none;"></canvas>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card" style="background: linear-gradient(135deg, #FF6600 0%, #FF6600DD 100%);">
+                <h3>美团外卖</h3>
+                <div class="value">4269万</div>
+                <p>平均指数</p>
+                <p>峰值：41096万</p>
+                <p>最低：1455万</p>
+                <p>数据点：13个月</p>
+            </div>
+        
+            <div class="stat-card" style="background: linear-gradient(135deg, #0078FF 0%, #0078FFDD 100%);">
+                <h3>饿了么</h3>
+                <div class="value">3960万</div>
+                <p>平均指数</p>
+                <p>峰值：30652万</p>
+                <p>最低：676万</p>
+                <p>数据点：13个月</p>
+            </div>
+        
+            <div class="stat-card" style="background: linear-gradient(135deg, #AA2116 0%, #AA2116DD 100%);">
+                <h3>京东外卖</h3>
+                <div class="value">5475万</div>
+                <p>平均指数</p>
+                <p>峰值：88482万</p>
+                <p>最低：0万</p>
+                <p>数据点：13个月</p>
+            </div>
+        
+        </div>
+    </div>
+    
+    <!-- Chart.js 3.9.1 稳定版本 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    
+    <script>
+        console.log('开始初始化图表...');
+        
+        // 等待页面完全加载
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM已加载，开始创建图表');
+            
+            // 图表数据
+            const labels = ["2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08"];
+            const datasets = [
+                {
+                    label: '美团外卖',
+                    data: [33464413.9, 34744250.63333333, 33930020.38709678, 31071052.133333333, 35154492.19354839, 28760390.322580647, 37221604.571428575, 27589508.774193548, 70452607.3, 51532121.548387095, 70540668.76666667, 54823921.70967742, 38796950.333333336],
+                    borderColor: '#FF6600',
+                    backgroundColor: 'rgba(255, 102, 0, 0.1)',
+                    fill: false,
+                    tension: 0.1,
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: '饿了么',
+                    data: [23372723.1, 18595414.133333333, 25152177.774193548, 16562867.4, 17119106.967741936, 13969302.58064516, 25759953.714285713, 20216168.35483871, 61466872.86666667, 60236689.41935484, 82867599.93333334, 88685808.35483871, 53755570.666666664],
+                    borderColor: '#0078FF',
+                    backgroundColor: 'rgba(0, 120, 255, 0.1)',
+                    fill: false,
+                    tension: 0.1,
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: '京东外卖',
+                    data: [320626.3, 70498.53333333334, 11821.064516129032, 14522.033333333333, 6700.129032258064, 2130886.9032258065, 131781481.82142857, 28821102.451612905, 260369457.76666668, 121396726.51612903, 59555772.53333333, 46005179.451612905, 25832573.80952381],
+                    borderColor: '#AA2116',
+                    backgroundColor: 'rgba(170, 33, 22, 0.1)',
+                    fill: false,
+                    tension: 0.1,
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointHoverRadius: 8
+                }
+            ];
+            
+            console.log('数据准备完成:', {labels: labels.length, datasets: datasets.length});
+            
+            // 获取图表元素
+            const ctx = document.getElementById('lineChart');
+            const loading = document.getElementById('loading');
+            
+            if (!ctx) {
+                console.error('找不到画布元素');
+                loading.innerHTML = '错误：找不到图表容器';
+                return;
+            }
+            
+            try {
+                console.log('开始创建Chart.js实例...');
+                
+                // 创建图表
+                const chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '外卖平台微信指数月度趋势对比',
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                padding: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 15,
+                                    font: {
+                                        size: 14
+                                    },
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + '：' + (context.parsed.y / 10000).toFixed(0) + '万';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '月份',
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14
+                                    }
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '微信指数',
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14
+                                    }
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return (value / 10000).toFixed(0) + '万';
+                                    }
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
+                });
+                
+                console.log('图表创建成功！', chart);
+                
+                // 隐藏加载提示，显示图表
+                loading.style.display = 'none';
+                ctx.style.display = 'block';
+                
+            } catch (error) {
+                console.error('创建图表时出错:', error);
+                loading.innerHTML = '图表加载失败：' + error.message;
+                loading.style.color = 'red';
+            }
+        });
+        
+        // 备用检查
+        window.addEventListener('load', function() {
+            console.log('页面完全加载完成');
+            setTimeout(function() {
+                const canvas = document.getElementById('lineChart');
+                const loading = document.getElementById('loading');
+                if (canvas && canvas.style.display === 'none' && loading && loading.style.display !== 'none') {
+                    console.log('图表仍未显示，显示错误信息');
+                    loading.innerHTML = '图表加载超时，请刷新页面重试';
+                    loading.style.color = 'orange';
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

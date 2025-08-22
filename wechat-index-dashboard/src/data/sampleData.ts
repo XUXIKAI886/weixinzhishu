@@ -1,0 +1,5 @@
+// 从26_Full.txt文件中读取的示例数据内容
+export const rawDataContent = `HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"code":0,"content":{"resp_list":[{"indexes":[{"time_indexes":[{"time":20240822,"score":42690},{"time":20240823,"score":39600},{"time":20240824,"score":36040}],"keyword":"美团"}],"platform":""},{"indexes":[{"time_indexes":[{"time":20240822,"score":38450},{"time":20240823,"score":35990},{"time":20240824,"score":33210}],"keyword":"京东"}],"platform":""},{"indexes":[{"time_indexes":[{"time":20240822,"score":41230},{"time":20240823,"score":38760},{"time":20240824,"score":35440}],"keyword":"美团外卖"}],"platform":""},{"indexes":[{"time_indexes":[{"time":20240822,"score":39600},{"time":20240823,"score":36840},{"time":20240824,"score":34120}],"keyword":"饿了么"}],"platform":""},{"indexes":[{"time_indexes":[{"time":20240822,"score":54750},{"time":20240823,"score":51230},{"time":20240824,"score":47890}],"keyword":"京东外卖"}],"platform":""}]}}`;
